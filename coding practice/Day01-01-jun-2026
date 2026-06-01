@@ -1,0 +1,141 @@
+Day 01 L1 — Basics
+
+Ansible Task 
+
+---
+- name: Install Nginx on pathnex server  #name of the playbook
+  hosts: all                             # Run on all hosts in the inventory file 
+  become: yes                            # use sudo access
+
+  tasks:                                 # List all the task to excute 
+- name: Install nginx                    # task name shown during exection
+  yum:                                   # use the yum package manager module 
+    name: nginx                          # pacakge to install
+    state: present                       # Ensure nginx is installed 
+
+
+Terraform Task — Create EC2 (c5.xlarge)
+#configure the clooud provider 
+provide "aws" {
+region = "us-east-1" #aws region where resource will be cretaed 
+}
+
+ami = "ami-0abcd1234abcd1234" # OS image template 
+
+instance_type = "c4.xlarge"   # Name display in aws console
+ }
+}
+
+
+Kubernetes Task — Create Nginx Pod
+#k8s api version being used 
+apiversion: v1
+
+#type of K8s object to create 
+kind:pod 
+
+#infromation about the pod 
+meta data:
+
+#Name of the pod 
+name : pathnex-pod
+
+#desired state/cofig of pod
+spec:
+
+#list of container indise the pod 
+containers:
+
+#name 
+-name: web
+
+# image 
+image: nginx:latest
+
+#ports:
+
+#ngnix listens on 80
+- continerport: 80
+
+
+
+Shell Script — Print Date & Hostname
+#!/bin/bash  # use for bash shebang
+echo "Date: $(date)"  # echo to print date 
+echo  "Hostname: $(hostname)" to print hostname 
+
+Git Integration
+Jenkins Pipeline — Checkout Git
+
+pipeline {
+
+agnet any //run on any available angent
+
+stages {
+
+stage('checkout')
+     steps  {
+            // clone this git repo from github
+            // equivalent command:
+            // git clone -b main on https /../.git
+           git branch: 'main'
+               url: 'url: 'https://github.com/Pathnex/sample-java-app.git''
+stage('List Files') {
+    steps {
+
+        // sh executes a Linux shell command on the Jenkins agent
+        // Equivalent command: ls -la (a is for all  dir ,hidden file)
+
+        sh 'ls -la'
+    }
+}
+
+
+
+GitLab CI — Checkout Git
+
+stages:
+  - checkout  # Pipeline stage
+
+git-checkout:
+  stage: checkout  # Job runs in checkout stage
+
+  script:
+
+    # Command: git clone <repository-url>
+    # Purpose: Download the repository from GitHub
+    - git clone https://github.com/Pathnex/sample-java-ap.git
+
+    # Command: cd sample-java-app
+    # Purpose: Change into the cloned repository directory
+    - cd sample-java-app
+
+    # Command: ls -la
+    # Purpose: List all files and dir including hidden too
+    - ls -la
+
+
+
+
+Day 01 L2 — Basics
+---
+- name: Install Nginx on pathnex server  #name of the playbook
+  hosts: all                             # Run on all hosts in the inventory file
+  become: yes                            # use sudo access
+
+  tasks:                                 # List all the task to excute
+- name: Install nginx                    # task name shown during exection
+  yum:                                   # use the yum package manager module
+    name: nginx                          # pacakge to install
+    state: present                       # Ensure nginx is installed
+
+
+Docker
+# Docker Installation & First Container
+docker --version # check version
+docker run ubuntu echo "Hello Pathnex" # run docker print hello pathnext
+
+
+# Docker File
+FROM ubuntu:22.04 #Which image we will you to crteate the docker 
+CMD ["echo", "Hello Pathnex"]  #Defines the default command & Can be overridden when running the container
