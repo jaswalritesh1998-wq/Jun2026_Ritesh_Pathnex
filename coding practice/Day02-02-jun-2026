@@ -1,0 +1,86 @@
+Day 02 L1- service & tags 
+
+ansible - install & enable nginx 
+
+---
+-name: Install nginx on pathnex server #name of the playbook #name of the playbook 
+ host: all                             # run on all host in the inventory file 
+ become: yes                           # use sudo access
+
+tasks:                                 #list all the task to excute 
+-name: Install nginx                   # task name shown during during execution
+yum:                                   # use the yum package manager module 
+   name: nginx                         # pacakge to install 
+   state: present                      # ensure nginx is installed 
+
+-name: Enable nginx service            #Task descriptions
+ service: #service module manges linuxx services
+   name:nginx  #service naem
+   state: started #ensure that service is runing
+   enabled: yes  #enabled ngix start automatically after system reboot.
+
+
+Terrafrom- ec2 with tahs (r5,2Xlatge)
+provider"aws" {region="us-east-1"} #provider tell the cloud # region resource will be created
+}
+resourse "aws_instance" "pathnexEC2" { ami = "ami-0abcd1234abcd1234" instance_type = "r5.2xlarge"
+
+tags = { Name = "pathnex-server" Enviormment = "tarining"  owner = PathnexStudent" }}
+
+
+
+
+
+kubernets - Deployment with 2 Replicas 
+apivesrion: apps/v1 kind: Deployment metadata: name: Pathnex-deployment spec: replicas 2 selector :matcglabel: app:pathnex=app template: metadata: labels: app: pathnex-app spec:conitners: -name: app image: nginx port: -containerPort: 80
+
+Shell Script — Disk Usage
+#!/bin/bash df -h
+                            
+
+ Jenkins Pipeline — Maven Build
+You will learn how to compile, test, and package a Java project using Maven.
+
+pipeline { agent any tools { maven 'Maven-3.8.1' jdk 'JDK-17' } stages { stage('checkout') { steps { git url: 'https://github.com/Pathnex/sample-java-app.git' } } stage('Compile') { steps { sh 'mvn clean compile' } } stage('Test') { steps { sh 'mvn test' } } stage('package') { steps { sh 'mvn package' } } } 
+}
+
+
+git lab - maven build 
+Stages:
+
+build 
+test
+package 
+maven-build: stage: build iamge: maven:3.8.1-jdk-17 script: - git clone https://github.com/Pathnext/samplw-java-app.git - cd sample-java-app - mvn clean complete
+
+maven test: stage : test image: maven:3.8.1-jdk-17 script : - cd sample-java-app - mvn test
+
+maven-package: stage: package iamge: maven:3.8.1-jdl-17 script: - cd sample-java-app - mvn package
+
+Day 02 L2 — Services & Tags
+
+Ansible - install & enable nginx
+name: Install and Start Nginx on pathnex host all become :yes 
+
+task
+name:Install nginx yux:name:nginx state:present
+name:enable nginx service:name:nginx state:started enable: yes
+
+
+Terraform-EC2 with tags (r5.2xlarge)
+provider"aws" {region = "us-east-1"}
+resource"aws_instance""PathnextEC2"{ami="ami"ami-0abcd1234abcd1234" instance_type = "r5.2xlarge"
+tags = { name = "pathnex-server" environment = "training" owner = "pathnexstudent" } }
+ 
+kubernetes - deployment with replicas
+apiVersion:apps/v1 kind;deployment metadata;name:pathnext-deployment spec:replicas:2selector:matchlabels:app:pathnex-app template:metadata:labels:app;pathnex-app sepc; continers: -name:app image:ndinx ports:-contnerport:80
+
+shellscript-
+diskuage #!/bin/bash df -h
+
+
+docket image & container
+docker pull ubuntu docker iamge docker ps -a 
+
+docker file 
+From ubuntu:22.04 RUN apt update CMD ["echo","Hello Pathnext"]
