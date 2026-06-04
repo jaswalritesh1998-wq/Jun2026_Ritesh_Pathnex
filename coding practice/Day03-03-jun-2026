@@ -1,0 +1,156 @@
+Day 03 L1 user,sgs, env ,vars 
+Anisible- Create User 
+
+name: create Pathnex user hosts: all become: yes 
+
+task:
+name: created user Pathnec-admin user: name: pathnex-admin shell:/bin/bash
+
+
+Terraform- security group (r6i.4xlarge EC2)
+provide "asw"{ region = "us-east-1"}
+
+resourse "aws_secuirty_group""pathnexSG {name = "pathnexSG"description = "pathnex sg for SSH 
+
+ingress {from_port = 22 to_port = 22 protocol = "tcp" cidr_blocks + ["0.0.0.0/0"]"} }
+
+resoyse "aws_instance" "PathnexEC2" { ami = "ami-0abccd1234abcd1234" instance_type = "r61.4xlarge" vpc_security_group_ids = [aws_security_group.pathnex.id]}
+
+tags = {name = "pathnex-EC2" }}}
+
+
+kubnernetes - Add enviroment variables 
+
+apiVersion: v1 kind: Pod metadata: name: pathnex-env-pod spec: containers: -name: 
+api image: nginx env: -name: APP_ENV value: "production
+
+
+Shell Script — Check File Exists
+#!/bin/bash FILE-"/tmp/pathnex,text"
+
+if [ -f "$File"]; then echo "File exists" else echo "File does not exist" fi
+
+NodeJS Build
+🔹 Jenkins Pipeline — NodeJS Build
+You will learn how to install dependencies, run tests, and build a NodeJS project.
+
+pipeline { agent any tools { nodejs 'NodeJS-16' } stages { stage('Checkout') { steps 
+
+
+NodeJs build 
+Jenkins pipleine - NodeJS Build 
+You will lean how to install depnedencies, run test, and buils a NodeHs project.
+
+Pipeline{
+agent any 
+
+tools{
+    nodejs 'NodeJS-16'
+    }
+Stages{
+
+     stage('Checkout')
+     {
+        Steps{
+         git url:'https://github.com/Pathnex/sample-node-app.git'
+        }
+     }
+             
+     stage('Install dependencies')
+     {
+        steps{
+     sh 'npm install'
+      }
+
+      }
+       
+    stage('run test')
+    {
+    steps
+    { sh 'npm test'
+    }
+    }
+     stage('Build')
+     {
+     steps { sh 'npm run build'   }
+     }
+}
+     }
+
+
+Gitlab ci - Nodejs build 
+
+Stages
+-install
+-test
+-build
+
+node-install 
+stage: install 
+image:  node:16
+script:
+-git clone  - git clone https://github.com/Pathnex/sample-node-app.git
+ - cd saple-node-app
+ - npm install
+
+ node-test stage: test image: node:16 script: - cdc sample-node-app - npm test
+
+ node-buid: stage: build image: node:16 script: - cd smaple-node-app - npm rum build 
+
+
+Day 03 L2 anisible,Terraform & k9s basic 
+ansible - install and start apache server
+name: install apache 
+yum: 
+name: Httpd 
+state: Present  
+
+- name: Enable and start Apache
+  service:
+    name: httpd
+    state: started
+  enabled yes  
+ 
+
+Teraform - ec2 Instance (t3.medium)
+provider "aws" {region = "us-east-1"}
+resourse "aws_instance" "PathnexEC2"{ ami-0abcd1234abcd1234" instance_type = "t3.medium"
+tags = { name = "pathnex_T3"}
+}
+}
+
+
+Kubernetes - create a relicaset  with 3 replicas 
+apiVersion: apps/v1
+kind : replicaset
+metadata:
+name: pathnex-replicaset 
+spec:
+replicas: 3 
+selector: 
+matchlabels:
+app: pathnex-app 
+tenplate: 
+metadata: 
+labels:
+app: pathnex-app
+spec: 
+contaniner:
+ - name: app 
+image: nginx 
+ports: - continerport: 80
+
+Shell script - user infro 
+#!/bin/bash echo "current user:(whoami)" echo"CurrentuserGroup:(group)"
+
+Docker file for nginx 
+from nginx: latest 
+Copy index.html/usr/share/nginx/html/index.html
+HTML
+hello pathnex 
+bash 
+real path 
+/user/share/ngix/html
+bash 
+docker buil -t pathnex-nginx.
+docker run -d -p 80:80 pathnex-nginx 
