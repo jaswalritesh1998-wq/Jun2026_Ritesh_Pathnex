@@ -1,0 +1,201 @@
+Day 04 - More packages,key pair service 
+
+ansible - install Mutiple packages 
+-name: Install packages for pathnex 
+hosts:all
+become: yes 
+
+task:
+-name : instal tools 
+yum:
+ name:
+ -git
+ -weget
+ State: present 
+
+
+
+
+ Terraform — EC2 with Key Pair (c6i.8xlarge)
+provider "aws" { region = "us-east-1" }
+
+resource "aws_key_pair" "PathnexKey" { key_name = "PathnexKey" public_key = "ssh-rsa AAAA...." }
+
+resource "aws_instance" "PathnexEC2" { ami = "ami-0abcd1234abcd1234" instance_type = "c6i.8xlarge" key_name = aws_key_pair.
+PathnexKey.key_name
+
+tags = { Name = "Pathnex-EC2" } }
+
+
+Terraform _ ec2 with key pair (c61.8Xlarge)
+provider "aws" { region + "us-east-1" }
+
+
+resource "aws_key_pair" "PathnexKey" { key_name = "PathnexKey" public_key = "ssh-rsa AAAA...." }
+
+resousre "aws_instance" 
+"PathnexEC2" { ami = "ami-0abccd1232521" instance_type = "c61.8xlarge" key_name = aws_key_pair.pathnexkey.key_name}
+
+tags = {name = pathnex-EC2}
+
+
+Kubernetes - Create ClusterIp service 
+apiVersion: v1 kind
+
+Service metadata:
+
+name:athnex-service
+
+spec:
+
+selector:
+
+app:pathnex-app 
+
+port:- port : 80
+
+targetport: 80
+
+
+Parallel Builds
+🔹 Jenkins Pipeline — Parallel Build & Test
+You will learn how to run build and test in parallel.
+
+
+Parallel Build 
+jekins pipline - parallel build & tset 
+you will learn how to run build and test in praallel 
+piplene {
+        agent any
+               satges{
+                  {
+                   stage('Parallel Task')
+                             {parallel
+                                     { stage('build')
+                                     {   steps{ sh 'mvn clean compile'}
+
+                                     }
+                                       stage(test)
+                                       {
+                                        steps 
+                                         {sh 'mvn test'
+                                         }
+                                       }
+                                     }
+                                     }
+                             }  
+                          }{}
+                      }
+               }
+
+ GitLab CI — Parallel Jobs
+You will learn how to run parallel jobs in GitLab CI.
+
+stages:
+
+build-test
+maven-build: stage: build-test image: maven:3.8.1-jdk-17 script: - git clone https://github.com/Pathnex/sample-java-app.git 
+- cd sample-java-app - mvn clean compile parallel: 1
+
+maven-test: stage: build-test image: maven:3.8.1-jdk-17 script: - cd sample-java-app - mvn test parallel: 1
+
+stages:
+buils test
+
+maven-buuild: stages: build-test
+image: maven:3:8:1-jdk-17 
+script: - git clone  https://github.com/Pathnex/sample-java-app.git 
+- cd sample-java-app -mvn clean compile parallel: 1
+
+maven-test: stage: build-testiamge: mave:maven:3:8:1-jdk-17  
+script: - cd sampl-java-app -mvn tset parallel:1
+
+Day 04 L2 — Basic CI/CD Concepts with Jenkins & GitLab
+
+Jenkinsfile — Basic CI Pipeline 
+pipeline { agent any stages { stage('Build') 
+{ steps { echo 'Building project' } } stage('Test') { 
+steps { echo 'Running tests' } } stage('Deploy') { steps { echo 'Deploying application' } } } }
+
+pipeline { agent any
+            stages {
+                  stage('build')
+                  {
+                    steps {
+                         echo 'Building project'}
+                         }
+                         stage('test')
+                         {
+                           steps
+                             { echo 'Running tset' } }
+                              stage('deploy')
+                              { echo 'Deploying application'
+                              }
+                             }
+                         }
+
+                    }                  
+                  }
+            
+            }
+
+}
+
+
+ GitLab CI/CD — Basic Pipeline stages:
+
+build 
+test
+deploy 
+
+build: stage: build script: - echo "Building project"
+
+test: stage : test script: - echo "running tests"
+
+deploy: stage: deploy script: -echo "Deploying application"
+
+
+ Ansible — Install and Configure Nginx
+
+name: Install and configure Nginx 
+hosts: all 
+become: yes 
+  tasks:
+   name: Install nginx 
+   yum: 
+   name: nginx 
+   state: present
+  name: Configure nginx 
+  template: 
+   src: nginx.conf.j2 
+    dest: /etc/nginx/nginx.conf
+    name: Start nginx service 
+    service: 
+    name: nginx 
+    state: started 
+e  nabled: yes
+
+
+
+Terraform - EC2 with Security Group
+resourse "aws_security_group" "example"
+{ name = "example_security_group" description = "all ssh and https" ingress
+
+{ from_port = 22 to_port = 22 protocol = "tcp"  cidr_blocks = ["0.0.0.0/0"] }
+
+egress { from_port = 0 to_port = 0 protocol = "-1" cidr_blocks = ["0.0.0.0/0"] }
+
+
+
+
+
+Docker
+
+apache conitner 
+From ubuntu:22:04 RUN apt update && apt insatl apache2 -y RUN echo "hello Pathnex" >
+/var/www/html/index.html.html 
+CMD ["apachectl","-D","FOREGROUND"]
+
+Bash real pathn
+/var/www/html
+
