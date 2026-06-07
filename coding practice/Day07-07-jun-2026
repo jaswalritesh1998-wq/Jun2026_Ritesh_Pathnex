@@ -1,0 +1,89 @@
+Day 07 — SPEED TYPING
+Rewrite ALL FOUR from scratch:
+
+Ansinble Tast install nginx
+name: install nginx  on pathnex server 
+host: all
+become: yes 
+
+task:
+-name: Intsall nginx 
+yum :
+name : nginx 
+state : Present 
+
+terraform Tash EC2 (c5.xlarge)
+provider "aws" {region = "us-eat-1"}
+resourse "aws_insatnace""Pathnex"
+{ami = "ami-0abcd1234abcd1234
+instance_type = "c5.xlarge"
+tags = { Name = "Pathnex-EC2"  }
+
+}
+
+
+Kubernetes:Deploymeny 2 replica 
+
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+name: pathnex-Deployment
+spec:
+replica: 2
+seelctor: 
+matchlabels:
+app: pathnex- app
+template;
+metadata:label:
+app:pathnex 
+spec:
+container: 
+-name : app
+image : nginx 
+pots: - coniterprt : 80 
+
+
+
+shell Print date + uptime 
+
+#!/bin/bash
+
+echo "Date"
+Date
+
+echo"uptime"
+uptime
+
+
+parameterrized Build 
+
+jekins pipleine 
+
+pipleine { anent any 
+         paramenters{
+                string 
+                       {
+                        name'ENVIroment',defualtValue:'dev'
+                        desciption:'Deployemnt Enviroment'}
+                        environment { INSTITUTE_NAME = "Pathnex" }
+                         stages {
+                           stage('Checkout')
+                           steps { git url: 'https://github.com/Pathnex/sample-java-app.git' }
+                            } stage('Deploy') 
+                            { 
+                              steps { sh 'echo "Deploying to $ENVIRONMENT by $INSTITUTE_NAME"' } } 
+
+                       } 
+         }
+         }
+         }
+
+     GitLab CI — Parameterized via Variables    
+     satge 
+     Deploy
+     variable : INSTITUTE_NAME: "pathnex" ENVIroment: "dev"
+     deploy;
+     stage:
+     deploy iamge: alpine: 
+     scrpit:
+     -echo "Deploying to $ENVIRONMENT by $INSTITUTE_NAME"
