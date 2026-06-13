@@ -1,0 +1,252 @@
+Day 13 — DEBUG DAY L1
+Ansible (Fix)
+---
+- name: Broken
+  hosts: all
+  become: yes
+
+tasks:
+ - name: install nignx
+    yum:
+      name: nginx  
+      state: present  
+
+Terraform (Fixed)
+resouce "aws_instance" BadEC2 
+{ ami = ami-123 instance_type="c5.large" 
+tags = { Name:"Broken" } }
+
+provider "aws"{
+region = "ap-south-1"
+}
+
+resouce = "aws_instance" "BadEC2"{
+ami = "ami-12122"
+instance_type = "c5.large"
+
+tags = {
+ name = "Broken"
+}
+}
+
+ Kubernetes (Fixed)
+
+apiVersion: apps/v1 
+kind: Deployment 
+
+metadata: 
+  name: broken 
+
+spec: 
+ replicas: 2 
+
+selector: 
+ matchLabels: 
+  app: broken 
+
+template: 
+ metadata: 
+  labels: 
+   app: broken 
+   spec: 
+   containers: 
+    - name: app 
+      image: nginx
+
+jekins Pipeline 
+
+Pipeline{
+  angent any{
+ enviroment{
+   INSTITUTE_NAME = "Pathnex"
+ 
+ }
+ matrix {
+      axes {
+         axis {
+            name 'JAVA_VERSION'
+            values '8', '11', '17'
+            }
+        }
+
+  stages{
+        steps('Build'){
+          Sh "echi Building with Java_$JAVA_VERSION"
+  }
+  }
+}
+}
+
+GitLab CI — Matrix Jobs
+stages:
+
+build
+build: 
+stage: 
+build image: maven:3.8.1-jdk-17 
+parallel: 
+matrix: - JAVA_VERSION: ['8', '11', '17'] 
+script: 
+- echo "Building with Java $JAVA_VERSION"
+
+
+day 13- L2
+
+Ansible  -- Mutinode nignx
+---
+-name: Setup nginx on Mutinode
+hosts: all
+become: yes
+
+task:
+-name: Install nginx
+yum:
+name: nginx
+Stage: present
+
+name: start nginx
+service:
+name: nginx
+state: Started
+Enable: Yes
+
+Terraform-creat iam usrs and police resouces
+
+provider "aws" {
+  region = "ap-south-1"
+}
+
+resource "aws_iam_policy" "example_policy" {
+ name        = "pathnex-policy"
+description = "Policy for Pathnex application"
+
+policy = jsonencode({
+Version = "2012-10-17"
+
+  Statement = [
+      {
+ Action   = "s3:ListBucket"
+Effect   = "Allow"
+Resource = "arn:aws:s3:::pathnex-bucket" }
+]})}
+
+
+
+
+
+Kubernetes - Deploy nignx with configmap and Scerets
+apiVersion: v1
+kind: ConfigMap
+metadata:
+ name: nginx-config
+data:
+nginx.conf: |
+events {}
+http {
+server {
+listen 80;
+server_name localhost;
+ location / {
+root /usr/share/nginx/html;
+index index.html index.htm;
+    } } }
+---
+apiVersion: v1
+kind: Secret
+metadata:
+name: nginx-secret
+type: Opaque
+data:
+password: cGF0aG5leHBhc3M=
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+name: pathnex-nginx
+spec:
+replicas: 2
+selector:
+ matchLabels:
+app: pathnex-nginx
+
+template:
+metadata:
+ labels:
+ app: pathnex-nginx
+
+Spec:
+ containers:
+ - name: nginx
+   image: nginx
+        
+volumeMounts:
+name: nginx-config
+mountPath: /etc/nginx/nginx.conf
+subPath: nginx.conf
+
+- name: nginx-secret
+mountPath: /etc/nginx/secret
+ readOnly: true
+
+volumes:
+- name: nginx-config
+configMap:
+name: nginx-config
+
+- name: nginx-secret
+secret:
+secretName: nginx-secret
+
+
+
+Jenkinsfile — Multi-Branch Pipeline with Docker Build 
+
+pipeline { agent any 
+stages { 
+stage('Build') 
+{ steps { 
+script { docker.build('pathnex-app') } } } 
+stage('Deploy') 
+{ steps 
+{ script 
+{ kubectl apply -f kubernetes/deployment.yaml } 
+}
+ }
+  }
+   }
+
+
+ GitLab CI/CD — Advanced Deployment with Helm stages:
+
+Stages: 
+- build 
+- push
+_ deploy
+
+Build:
+Stage: build 
+script:
+-echo "Building docker Image"
+-Docker Build -t Pathnex-web-app .
+
+
+push:
+Stage: push
+script:
+- echo "Loging into Resgirty"
+- docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
+- docker push pathnex-web-app
+
+deploy
+Stage: deploy
+script:
+ echo "Deploying Application"
+    - helm repo add pathnex https://charts.pathnex.com
+    - helm install pathnex-nginx pathnex/nginx-ingress
+
+
+Docker file 
+FROM  ubuntu 
+COPY pathnex-file.txt /opt/pathnex/files/
+ADD  pathnex.tar.gz /opt/pathnex/extracted/
+
