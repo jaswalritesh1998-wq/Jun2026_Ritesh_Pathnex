@@ -1,0 +1,246 @@
+Day 17 — Loops, ALB, Namespace, Top Processes
+Ansible — Create Multiple Users in Loop
+Anible - Create Mutiple User in lopp 
+Name: create mutiple Pathnex users 
+hosts: all 
+become: yes 
+vars: 
+users: - dev 1 - dev2 - dev3 
+tasks:
+Namespaceame: Create users 
+user: 
+name: "{{ item }}" 
+state: 
+present Loop: "{{user}}" 
+
+
+
+
+Terraform — Application Load Balancer
+provider "aws" {
+ region = us-east-1 
+}
+
+resource "aws_lb" "PathnexALb"
+{
+name = "Pathnex-alb"
+
+load_balancer_type = "application"
+
+Subnet= [aws_subnet.PathnexSubnet.id]
+}
+
+tags = { Name = "Pathnex-ALB"}
+
+🔹 Kubernetes — Namespace + Deployment
+apiVersion: v1 
+kind: Namespace 
+metadata: 
+name:
+ pathnex-namespace
+
+apiVersion: apps/v1 
+kind: Deployment 
+metadata: 
+name: pathnex-deploy 
+namespace: pathnex-namespace 
+spec: 
+replicas: 2
+ selector: 
+ matchLabels: 
+ app: 
+ pathnex 
+ template:
+  metadata: 
+  labels: 
+  app: 
+  pathnex spec: 
+  containers: 
+  - name: 
+  app image: nginx
+
+Shell Script — Top 5 Memory Processes
+#!/bin/bash
+
+ps aux --sort=-%mem | head -n 6
+
+Deployment Simulation jekins 
+
+pipeline { agent any 
+parameters { 
+  choice
+  (name: 'ENVIRONMENT', 
+  choices: ['dev', 'staging', 'prod'], 
+  description: 'Deployment Environment') 
+  } environment { INSTITUTE_NAME = "Pathnex" } 
+  stages { 
+    stage('Deploy') 
+    { steps { sh 'echo "Deploying $INSTITUTE_NAME application to $ENVIRONMENT"' } } } }
+
+GitLab CI — Deployment Simulation
+stages:
+deploy
+variables: 
+INSTITUTE_NAME: "Pathnex" 
+ENVIRONMENT: "staging"
+
+deploy: 
+stage:
+deploy image: alpine:latest 
+script: - echo "Deploying $INSTITUTE_NAME application to $ENVIRONMENT"
+
+Day 17— L2
+
+ansible - auto-healing web server with systemd 
+-name: configure auto-healing for web server
+hosts: all 
+become: yes 
+tasks:
+-name; Ensure nginx service is running 
+service:
+name: nginx 
+state: started 
+enable: yes 
+-name : Setup auto-restart for nginx service
+ lineinfile:
+ path: /etc/systemd/system/nginx.service.d/override.conf
+  line: "Restart=always"
+  create: yes
+  - name: Reload systemd
+  command: systemctl daemon-reload
+
+  Terraform - muti-cloud Infrastructure with aws and azure 
+  provider "aws"{
+   region = east-us-1
+  }
+  resource "Aws-vpc" "main"{
+    cidr_block = "10.0.0.0/16"
+  }
+  resource "azure_vitural_networks" "main"{
+   name :
+   loaction:
+   addres space :
+   resource_group_group;
+   }
+   # EC2 instance in AWS
+resource "aws_instance" "pathnex_ec2" {
+  ami           = "ami-0abcd1234abcd1234"
+  instance_type = "t2.micro"
+  region        = "us-east-1"
+}
+
+# Virtual Machine in Azure
+resource "azurerm_linux_virtual_machine" "pathnex_vm" {
+  name                = "pathnex-azure-vm"
+  resource_group_name = azurerm_resource_group.main.name
+  location            = azurerm_resource_group.main.location
+  size                = "Standard_B1s"
+  admin_username      = "azureuser"
+  admin_password      = "P@ssw0rd123!"
+}
+
+
+Kubernative - self healing liveness and readines  prodes 
+appivesrion: apps/v1
+kind: Deployment
+metadata:
+ name: Pathnex- web -app
+ spec:
+ replicas: 3
+ selector: 
+ matchLabels: 
+ app: pathnex-web-app
+ template:
+ metadata:
+ lables:
+ app: Pathnex-web-app
+ spec:
+ continers:
+ - name: nginx 
+   image: mgnix
+   ports:
+   - continersPorts: 80 
+   livenessProbe:
+   httpget:
+   path: /healthz
+   port: 80 
+   initinaldelay seconds: 5
+   periodseconds: 10 
+   redinessprobe:
+   httpget :
+   path: / healthz
+   port: 80 
+   initinaldelay : 5 
+   periodsecond : 10
+
+
+   jekins puipeline
+   pipeline {
+     agent any {
+      enviroment 
+      {
+        stages{
+          stage('Buid')
+        steps{
+            echo 'building Docker image...'
+              docker.build("${env.IMAGE_NAME}")
+        }
+        }
+       stage ('Test'){
+         steps{
+             echo 'Running tests....'
+         }
+
+       }
+       stage(deploy)
+     steps{
+     script{
+        sh 'kubectl apply -f kubernetes/delopment.yaml'
+        sh 'kubectl rollout status delopment/pathnex-web-app'
+     }
+
+     } 
+      
+      
+      }
+
+
+
+     }
+
+   }
+   Gitlap CI/CD - Muti cloud Delpoyment 
+
+stages:
+-build
+- push 
+-deploy 
+
+build:
+stages; build 
+script:
+- docker build -t pathnex-web-app .
+
+
+Push:
+stage: push 
+script:
+- docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
+- docker push pathnex-web-app
+
+deploy_aws 
+stage: deploy 
+script:
+- kubectl --context-aws-cluster apply -f kubnenetes/Deployment.yaml
+
+deploy_azure
+stage: deploy
+script:
+- kubectl --context-azure-cluster apply -f kubnenetes/Deployment.yaml
+
+docker run -d \
+--name pathnex-mysql \
+-e MYSQL_ROOT_PASSWORD=root \
+mysql:8
+
+/var/lib/mysql
