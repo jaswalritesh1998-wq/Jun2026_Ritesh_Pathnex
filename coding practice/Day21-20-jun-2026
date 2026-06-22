@@ -1,0 +1,125 @@
+Day - 21
+ansible 
+-name : install nginx and start  
+hosts: all
+become: yes 
+
+tasks:
+
+-name: Install nginx
+yum:
+name: nginx
+state: present 
+
+-name : start nginx
+service:
+name: start name
+name: nignx 
+state: started
+
+
+terraform 
+provider "aws" {
+  region = "us-east-1"
+}
+
+resource "aws_instance" "rj" {
+ami        = "ami-xxxxxxxx"
+Instance_type    = "c7i.flex.large"
+  subnet_id     = "subnet-xxxxxxxx"
+  vpc_security_group_ids = ["sg-xxxxxxxx"]
+
+  tags = {
+    Owner = "PathnexStudent"
+  }
+}
+
+Then explain:
+
+kubernets 
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+name: nginx-deployment
+
+spec:
+replicas: 3
+
+selector:
+matchLabels:
+ app: nginx
+
+template:
+metadata:
+labels:
+app: nginx
+
+spec:
+ containers:
+  - name: nginx
+  image: nginx:latest
+   ports:
+  - containerPort: 80
+
+
+  shell 
+  #!/bin/bash 
+
+  echo "todays date is  $(date)"
+  updtime 
+  du -h 
+
+muti-enviomet build 
+
+Cicd jenkins 
+pipleine{
+ageny any {
+envioremnt{
+  INSTITUTE_NAME = "Pathnex"
+}
+stages{
+  stage("deploy to dev"){
+    steps{
+      sh echo"Deploying $INSTITUTE_NAME to Dev environment"
+    }
+stage("Deploy to Staging"){
+steps{
+   input message: "Approve Staging Deployment?" sh 'echo "Deploying $INSTITUTE_NAME to Staging environment"' }
+    }
+   stage("Deploy to Prod'"){
+    steps{
+      input message: "Approve Prod Deployment?" sh 'echo "Deploying $INSTITUTE_NAME to Prod environment"'
+    }
+  }
+  
+  }
+
+  }
+
+
+stages:
+-deploy
+
+variable:
+INSTITUTE_NAME: "Pathnex"
+
+deploy-dev: 
+stage: deploy 
+image: alpine:latest 
+script: 
+- echo "Deploying $INSTITUTE_NAME to Dev environment"
+
+deploy-staging: 
+stage: deploy 
+image: alpine:latest 
+script: 
+- echo "Deploying $INSTITUTE_NAME to Staging environment" 
+when: manual
+
+deploy-prod: 
+stage: deploy 
+image: alpine:latest 
+script: - echo "Deploying $INSTITUTE_NAME to Prod environment" 
+when: manual
+
