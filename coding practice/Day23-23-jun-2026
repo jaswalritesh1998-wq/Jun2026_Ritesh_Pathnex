@@ -1,0 +1,106 @@
+Day 23
+ansible- add tags to users 
+-name:
+hosts:
+become:
+
+tasks:
+name:
+user:
+comment:
+
+
+Terraform
+provider "aws"{
+region = us-east-1 
+}
+resourse "aws_insatance" "PathnexEc2"
+{
+instance type = "t2.micro"
+ami  = "ami"
+}
+
+
+resourse"aws_eip""PathnexEIP"{
+instance + aws_instance>PathnexEIP
+}
+
+tags = {Name = "Path"}
+
+
+Kubernetes- HorizontalPodAutoscaler (HPA)
+apiversion: autoscaling/v2 
+kind: HorizontalPodAutoscaler
+
+metadata:
+name: pathnex-HPA
+
+spec:
+scaleTagerref:
+apiversio: apps/v1
+kind: Depolyment 
+name: pathnex-deploy 
+
+minreplicas: 2
+maxreplicas: 6
+
+mertics:
+ -type : Resource
+ resource: 
+ name: cpu 
+ taget : 
+ type: utilization 
+ averageUtilzation: 50
+
+Shell Script - Kill High Cpu Process
+#!/bin/bash 
+
+PID=$(ps aux --sort=-%cpu|awk 'NR== 2 {Print $2}')
+
+echo "killing process: $PID" Kill -9 $PID 
+
+
+Jekins Pipleine - Build Docker Image 
+pipleine{
+agent any 
+enviroment {INSTITUTE_NAME = "Pathnex" TEAM = "DevOps" ENV = "staging" PROJECT = "WebApp"}
+stages{
+stage('Checkout'){
+    steps{git url: 'https://github.com/Pathnex/sample-java-app.git'}}
+    stage('Build Docker Image') {
+         steps { sh ''' docker build -t pathnex/webapp:${ENV}-${BUILD_NUMBER}
+--label "INSTITUTE_NAME=$INSTITUTE_NAME"
+--label "TEAM=$TEAM"
+--label "ENV=$ENV"
+--label "PROJECT=$PROJECT" . ''' } } } }
+
+GitLab CI
+stages:
+
+docker-build
+variables:
+ INSTITUTE_NAME: "Pathnex" 
+ TEAM: "DevOps" 
+ ENV: "staging" 
+ PROJECT: "WebApp"
+
+docker-build: 
+stage: docker-build
+ image: docker:latest 
+ services: 
+ - docker:dind 
+ script: 
+ - docker build -t pathnex/webapp:${ENV}-${CI_PIPELINE_ID}
+--label "INSTITUTE_NAME=$INSTITUTE_NAME"
+--label "TEAM=$TEAM"
+--label "ENV=$ENV"
+--label "PROJECT=$PROJECT" .
+
+
+
+
+
+
+
+
+
