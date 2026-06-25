@@ -1,0 +1,104 @@
+Day-25
+name:update SSH config for pathnex
+---
+-hosts: all 
+become: yes 
+task :
+name: Disable root login 
+lineinfile: 
+path: /etc/ssh/sshd_config 
+regexp: "permisitRootLogin"
+Line: "PermitRootlogon no"
+
+ Terraform — EC2 Key Pair Output
+
+resource "aws_key_pair""Pathnexkey"{
+
+Key_name = "PathnexKey"
+
+public_key = file(~/ssd/id_rsa.pub)}
+Output "Pathnex.Key_Name"{value = aws_key_pair.pathrnexKey.key_name}
+
+Kubernetes — Multi-Container Pod (Sidecar Logging)
+apiVersion: v1 
+kind: Pod 
+metadata: 
+name: pathnex-sidecar 
+spec: 
+containers: 
+- name: app 
+image: nginx 
+- name: log-writer 
+image: busybox 
+command: ["sh", "-c", "while true; do echo log entry; sleep 5; done"]
+
+apiVersion: v1
+kind: pod 
+metadata:
+name: Pathnex-sidecar
+spec:
+continers:
+-name: app 
+image: busybox
+command ["sh", "-c""while true" do echo log entry; sleep 5 ; done"]
+
+Shell Script
+#!/bin/bash 
+
+Dir= "/var/log"
+Count= $( ls $DIR | wc -1)
+echo "Total files in $DIR:$COUNT"
+
+jekins 
+pipeline {
+
+agent any
+
+enviorment{
+INSTITUTE_NAME = "Pathnex"
+        TEAM = "DevOps"
+        ENV = "staging"
+
+stages{
+stage(checkout){
+steps{
+git url: 'https://github.com/Pathnex/sample-java-app.git'
+}
+}
+stages{
+stage(Build){
+steps {
+sh ...
+if [ "-d .m2"]; then
+echo "Using cached dependencies for $INSTITUTE_NAME in $ENV by $TEAM"
+else 
+ mvn clean compile
+ fi
+ ...
+}
+}
+}
+}
+
+git lab 
+stages;
+- checkout 
+- build 
+
+variables : 
+ INSTITUTE_NAME: "Pathnex"
+  TEAM: "DevOps"
+  ENV: "staging"
+
+build job:
+stage: build 
+
+script:
+script:
+    - |
+      if [ -d ".m2" ]; then
+        echo "Using cached dependencies for $INSTITUTE_NAME in $ENV by $TEAM"
+      else
+        mvn clean compile
+      fi
+
