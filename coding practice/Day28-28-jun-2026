@@ -1,0 +1,64 @@
+day -28
+Day 28 — Debug Day (fixed)
+- name: Install nginx
+hosts: all
+become: yes
+tasks:
+- name: Install nginx package
+yum:
+name: nginx
+state: present
+
+Terraform — Broken(fixed)
+resource "aws_s3_bucket" "bad_bucket" {
+  bucket = "pathnex-bucket"
+  acl    = "public-read"
+}
+
+Kubernetes — Broken (fixed)
+apiVersion: v1
+kind: Pod
+metadata:
+name: brokenpod
+spec:
+containers:
+name: app
+image: nginx
+Rollback Strategies
+
+
+Jenkins Pipeline — Automatic Rollback
+pipeline {
+agent any
+environment {
+INSTITUTE_NAME = "Pathnex"
+TEAM           = "DevOps"
+ENV            = "prod"
+    }
+
+stages {
+stage('Deploy') {
+steps {
+script {
+try {
+sh 'echo "Deploying $INSTITUTE_NAME app in $ENV for $TEAM"'
+sh 'exit 1'   // Simulate failure
+} catch (Exception e) {
+echo "Deployment failed. Rolling back $INSTITUTE_NAME app in $ENV"
+}}}}}}
+
+ GitLab CI — Rollback Strategy
+stages:
+- deploy
+variables:
+INSTITUTE_NAME: "Pathnex"
+TEAM: "DevOps"
+ENV: "prod"
+deploy:
+stage: deploy
+image: alpine:latest
+script:
+- echo "Deploying $INSTITUTE_NAME app in $ENV for $TEAM"
+- exit 1   # Simulate deployment failure
+after_script:
+    - echo "Deployment failed. Rolling back $INSTITUTE_NAME app in $ENV"
